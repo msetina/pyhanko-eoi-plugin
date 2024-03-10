@@ -54,7 +54,7 @@ class EOIPlugin(SigningCommandPlugin):
 def _eoi_signer_context(ctx: CLIContext, lib, token_label, user_pin):
     import pkcs11
 
-    from pyhanko.sign import eoi
+    from pyhanko_eoi import eoi
 
     module_path: str
     if not lib:
