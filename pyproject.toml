@@ -1,0 +1,89 @@
+[build-system]
+requires = [
+    "setuptools>=67.4",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pyhanko-eoi-plugin"
+description = "pyHanko plugin for Slovenian eOI cards"
+authors = [{name = "Miha Šetina", email = "miha.setina@gmail.com"}]
+maintainers = [{name = "Miha Šetina", email = "miha.setina@gmail.com"}]
+license = {text = "MIT"}
+keywords = [
+    "signature",
+    "pdf",
+    "digital-signature",
+    "pkcs11",
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Information Technology",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security :: Cryptography",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "pyHanko[pkcs11]>=0.23.0",
+]
+version = "0.1.0"
+
+
+[project.readme]
+file = "README.rst"
+content-type = "text/x-rst"
+
+[project.urls]
+Homepage = "https://github.com/msetina/pyhanko-eoi-plugin"
+"Source Code" = "https://github.com/msetina/pyhanko-eoi-plugin"
+"Issue Tracker" = "https://github.com/msetina/pyhanko-eoi-plugin/issues"
+
+[project.entry-points."pyhanko.cli_plugin.signing"]
+eoi = "pyhanko_eoi.cli:EOIPlugin"
+
+[project.optional-dependencies]
+testing = [
+    "pyhanko-eoi-plugin",
+    "pytest>=6.1.1",
+    "pytest-cov>=4.0,<4.2",
+]
+mypy = [
+    "pyhanko-eoi-plugin",
+    "types-PyYAML",
+]
+
+[tool.setuptools]
+include-package-data = false
+license-files = ["LICENSE"]
+
+[tool.setuptools.packages.find]
+include = ["pyhanko_eoi*"]
+exclude = ["pyhanko_eoi_tests*"]
+
+[tool.setuptools.package-data]
+pyhanko_eoi = ["py.typed"]
+
+[tool.mypy]
+files = "pyhanko_eoi"
+
+[[tool.mypy.overrides]]
+module = ["pkcs11.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+log_format = "%(asctime)s %(levelname)s %(message)s"
+log_date_format = "%Y-%m-%d %H:%M:%S"
+log_cli = true
+log_cli_level = "INFO"
+norecursedirs = "testdata"
+testpaths = "pyhanko_eoi_tests"
