@@ -15,7 +15,7 @@ from pyhanko.sign import pkcs11 as sign_pkcs11
 __all__ = ['open_eoi_session', 'EOISigner']
 
 
-def open_eoi_session(lib_location,token_label:str='Podpis in prijava (Sig PIN)',user_pin:str=None) -> Session:
+def open_eoi_session(lib_location,token_label:str='Podpis in prijava (Sig PIN)',user_pin:str|None=None) -> Session:
     """
     Open a PKCS#11 session
 
