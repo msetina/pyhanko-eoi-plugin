@@ -9,8 +9,8 @@ EOI driver is available in OpenSC from version 0.24.0 . For best excperience use
 Official driver based on IDProtect is not supported (yet).
 """
 
-from pkcs11 import Session,ObjectClass,KeyType
 from pyhanko.sign import pkcs11 as sign_pkcs11
+from pkcs11 import Session, ObjectClass, KeyType
 
 __all__ = ['open_eoi_session', 'EOISigner']
 
