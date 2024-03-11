@@ -11,7 +11,7 @@ on:
 jobs:
   ci:
     name: Run CI pipeline
-    uses: msetina/pyhanko-eoi-plugin/.github/workflows/build-pipeline.yml@master
+    uses: msetina/pyhanko-eoi-plugin/.github/workflows/build-pipeline.yml@main
     permissions:
       actions: write
       contents: read

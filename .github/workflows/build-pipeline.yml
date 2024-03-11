@@ -2,9 +2,9 @@ name: CI pipeline
 
 on:
   push:
-    branches: [ master, "release/*", "maintenance/*", "ci/*" ]
+    branches: [ main, "release/*", "maintenance/*", "ci/*" ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
   workflow_call:
     secrets: {}
     outputs:
