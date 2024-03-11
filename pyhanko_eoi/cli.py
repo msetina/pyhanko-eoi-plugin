@@ -14,8 +14,8 @@ from pyhanko.sign import Signer
 
 
 class EOIPlugin(SigningCommandPlugin):
-    subcommand_name = 'eoi'
-    help_summary = 'use Slovenian eOI to sign'
+    subcommand_name = "eoi"
+    help_summary = "use Slovenian eOI to sign"
     unavailable_message = UNAVAIL_MSG
 
     def is_available(self) -> bool:
@@ -24,21 +24,21 @@ class EOIPlugin(SigningCommandPlugin):
     def click_options(self) -> List[click.Option]:
         return [
             click.Option(
-                ('--lib',),
-                help='path to opensc-pkcs11 library file',
+                ("--lib",),
+                help="path to opensc-pkcs11 library file",
                 type=readable_file,
                 required=False,
             ),
             click.Option(
-                ('--token_label',),
-                help='specify PKCS#11 token',
+                ("--token_label",),
+                help="specify PKCS#11 token",
                 required=False,
                 type=str,
-                default='Podpis in prijava (Sig PIN)',
+                default="Podpis in prijava (Sig PIN)",
             ),
             click.Option(
-                ('--user_pin',),
-                help='specify user pin for accessing the token',
+                ("--user_pin",),
+                help="specify user pin for accessing the token",
                 required=False,
                 type=str,
                 default=None,
@@ -49,10 +49,10 @@ class EOIPlugin(SigningCommandPlugin):
         self, context: CLIContext, **kwargs
     ) -> ContextManager[Signer]:
         return _eoi_signer_context(context, **kwargs)
-    
+
 
 def _eoi_signer_context(ctx: CLIContext, lib, token_label, user_pin):
-    import pkcs11
+    from pkcs11 import PKCS11Error
 
     from pyhanko_eoi import eoi
 
@@ -61,9 +61,7 @@ def _eoi_signer_context(ctx: CLIContext, lib, token_label, user_pin):
         cli_config: Optional[CLIConfig] = ctx.config
         eoi_module_path = None
         if cli_config is not None:
-            eoi_module_path = cli_config.raw_config.get(
-                'eoi-module-path', None
-            )            
+            eoi_module_path = cli_config.raw_config.get("eoi-module-path", None)
         if eoi_module_path is None:
             raise click.ClickException(
                 "The --lib option is mandatory unless eoi-module-path is "
@@ -76,8 +74,10 @@ def _eoi_signer_context(ctx: CLIContext, lib, token_label, user_pin):
     @contextlib.contextmanager
     def manager():
         try:
-            session = eoi.open_eoi_session(module_path,token_label=token_label,user_pin=user_pin)
-        except pkcs11.PKCS11Error as e:
+            session = eoi.open_eoi_session(
+                module_path, token_label=token_label, user_pin=user_pin
+            )
+        except PKCS11Error as e:
             logger.error("PKCS#11 error", exc_info=e)
             raise click.ClickException(
                 f"PKCS#11 error: [{type(e).__name__}] {e}"
