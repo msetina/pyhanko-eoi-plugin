@@ -10,7 +10,7 @@ updates:
   labels:
     - "gha-deps"
   reviewers:
-    - "MatthiasValvekens"
+    - "msetina"
 - package-ecosystem: "pip"
   directory: "/"
   schedule:
@@ -20,4 +20,4 @@ updates:
   labels:
     - "python-deps"
   reviewers:
-    - "MatthiasValvekens"
+    - "msetina"
