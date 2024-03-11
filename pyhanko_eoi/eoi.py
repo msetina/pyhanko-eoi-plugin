@@ -27,10 +27,14 @@ def open_eoi_session(
         Path to the shared library file containing the eID PKCS#11 module.
     :param token_label:
         Token label to use. If not specified token
-        labelled ``Podpis in prijava (Sig PIN)`` will be used. This is the only token containg key with non-repudiation.
+        labelled ``Podpis in prijava (Sig PIN)`` will be used.
+        This is the only token containg key with non-repudiation.
     :param user_pin:
-        Pin to authenticate to tokens ``Podpis in prijava (Sig PIN)`` and ``Podpis in prijava (Norm PIN)``. Default is None, which means no authentication.
-        If user_pin is None only ``Prijava brez PIN-a (Norm PIN)`` is available.
+        Pin to authenticate to tokens ``Podpis in prijava (Sig PIN)``
+        and ``Podpis in prijava (Norm PIN)``.
+        Default is None, which means no authentication.
+        If user_pin is None only ``Prijava brez PIN-a (Norm PIN)``
+        is available, but that is not realy acceptable for signing.
     :return:
         An open PKCS#11 session object.
     """
@@ -65,7 +69,8 @@ class EOISigner(sign_pkcs11.PKCS11Signer):
     on the card.
     This includes the government's (self-signed) root certificate and the
     certificate of the appropriate intermediate CA.
-    To be able to elevate trust of your signature use ValidationContext with trust_roots set to a list top issuer certs in PdfSignatureMetadata,
+    To be able to elevate trust of your signature use ValidationContext with
+    trust_roots set to a list top issuer certs in PdfSignatureMetadata,
     because top issuer cert is self signed.
     """
 
