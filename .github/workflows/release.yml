@@ -40,7 +40,7 @@ jobs:
           cat "$GITHUB_OUTPUT"
   publish:
     name: Publish release artifacts
-    needs: [extract-params]
+    needs: [extract-params,ci]
     runs-on: ubuntu-latest
     environment: ${{ needs.extract-params.outputs.publish-env }}
     permissions:
