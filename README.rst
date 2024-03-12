@@ -1,5 +1,5 @@
 python-eoi-plugin
-==================
+=================
 
 
 Introduction
@@ -41,7 +41,7 @@ This will work as long as you ensure that ``pyhanko_eoi`` is importable.
 
 
 Signing a PDF file using a Slovenian eOI card
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 To sign a PDF file using your eOI card and pyHanko's CLI (with this plugin),
 use the ``eoi`` subcommand to ``addsig``, with the ``--lib`` parameter to
