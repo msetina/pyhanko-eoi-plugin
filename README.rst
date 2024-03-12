@@ -64,7 +64,7 @@ On Linux, this boils down to the following:
 .. code-block:: bash
 
     pyhanko sign addsig --field Sig1 eoi --user-pin 12345 \
-        --lib /path/to/epensc-pkcs11.so input.pdf output.pdf
+        --lib /path/to/opensc-pkcs11.so input.pdf output.pdf
 
 
 .. warning::
