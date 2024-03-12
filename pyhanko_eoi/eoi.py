@@ -55,11 +55,13 @@ def open_eoi_session(
                     lib_location, token_label=token_label
                 )
             else:
-                raise Exception(
+                raise sign_pkcs11.PKCS11Error(
                     "For provided token_label, you need to provide user_pin"
                 )
     else:
-        raise Exception("Provided token is not available on the card")
+        raise sign_pkcs11.PKCS11Error(
+            "Provided token is not available on the card"
+        )
 
 
 class EOISigner(sign_pkcs11.PKCS11Signer):
