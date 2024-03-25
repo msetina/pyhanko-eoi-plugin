@@ -12,6 +12,18 @@ Official driver based on IDProtect is not supported (yet).
 from pkcs11 import KeyType, ObjectClass, Session
 from pyhanko.sign import pkcs11 as sign_pkcs11
 
+tokens = {
+    "opensc": {
+        "Prijava brez PIN-a (Norm PIN)": {"needs_pin": False},
+        "Podpis in prijava (Norm PIN)": {"needs_pin": True},
+        "Podpis in prijava (Sig PIN)": {"needs_pin": True},
+    },
+    "nxp": {
+        "Prijava brez PIN-a": {"needs_pin": False},
+        "Podpis in prijava": {"needs_pin": True},
+    },
+}
+
 __all__ = ["open_eoi_session", "EOISigner"]
 
 
@@ -38,19 +50,15 @@ def open_eoi_session(
     :return:
         An open PKCS#11 session object.
     """
+    pksc11_lib_type = "opensc"
 
-    opensc_eoi_tokens = [
-        "Prijava brez PIN-a (Norm PIN)",
-        "Podpis in prijava (Norm PIN)",
-        "Podpis in prijava (Sig PIN)",
-    ]
-    if token_label in opensc_eoi_tokens:
+    if token_label in tokens[pksc11_lib_type]:
         if user_pin:
             return sign_pkcs11.open_pkcs11_session(
                 lib_location, user_pin=user_pin, token_label=token_label
             )
         else:
-            if token_label == "Prijava brez PIN-a (Norm PIN)":
+            if not tokens[pksc11_lib_type][token_label]["needs_pin"]:
                 return sign_pkcs11.open_pkcs11_session(
                     lib_location, token_label=token_label
                 )

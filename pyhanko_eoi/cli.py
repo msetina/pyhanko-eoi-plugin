@@ -71,6 +71,18 @@ def _eoi_signer_context(ctx: CLIContext, lib, token_label, user_pin):
     else:
         module_path = lib
 
+    pksc11_lib_type = "opensc"
+
+    if token_label in eoi.tokens[pksc11_lib_type]:
+        token_tp = eoi.tokens[pksc11_lib_type][token_label]
+        if "needs_pin" in token_tp:
+            if token_tp["needs_pin"] and not user_pin:
+                user_pin = input("PIN:")
+    else:
+        raise click.ClickException(
+            "The --token_label option you provided is not known to this card."
+        )
+
     @contextlib.contextmanager
     def manager():
         try:

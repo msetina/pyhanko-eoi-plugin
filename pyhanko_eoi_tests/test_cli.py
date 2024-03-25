@@ -81,6 +81,7 @@ def test_cli_addsig_eoi(cli_runner, monkeypatch):
             INPUT_PATH,
             "output.pdf",
         ],
+        "12345",
     )
     assert not result.exception, result.output
 
@@ -103,6 +104,7 @@ def test_cli_addsig_eoi_with_setup(cli_runner, monkeypatch):
             INPUT_PATH,
             SIGNED_OUTPUT_PATH,
         ],
+        "12345",
     )
     assert not result.exception, result.output
 
@@ -124,6 +126,7 @@ def test_cli_eoi_lib_mandatory(cli_runner, monkeypatch):
             INPUT_PATH,
             SIGNED_OUTPUT_PATH,
         ],
+        "12345",
     )
     assert result.exit_code == 1
     assert "--lib option is mandatory" in result.output
@@ -152,6 +155,7 @@ def test_cli_eoi_pkcs11_error(cli_runner, monkeypatch):
             INPUT_PATH,
             SIGNED_OUTPUT_PATH,
         ],
+        "12345",
     )
     assert result.exit_code == 1
     assert "PKCS#11 error" in result.output
@@ -182,6 +186,33 @@ def test_cli_eoi_pkcs11_error_on_token_label(cli_runner, monkeypatch):
             INPUT_PATH,
             SIGNED_OUTPUT_PATH,
         ],
+        "12345",
     )
     assert result.exit_code == 1
-    assert "PKCS#11 error" in result.output
+    assert "Error" in result.output
+
+
+def test_cli_addsig_eoi_with_pin(cli_runner, monkeypatch):
+    from pyhanko_eoi import eoi
+
+    monkeypatch.setattr(eoi, "open_eoi_session", value=_const(_DummyManager()))
+    monkeypatch.setattr(eoi, "EOISigner", value=_const(SELF_SIGN))
+    with open("libeoipkcs11-mock", "wb") as mocklib:
+        mocklib.write(b"\x00")
+    result = cli_runner.invoke(
+        cli_root,
+        [
+            "sign",
+            "addsig",
+            "--field",
+            "Sig1",
+            "eoi",
+            "--lib",
+            "libeoipkcs11-mock",
+            "--user_pin",
+            "12345",
+            INPUT_PATH,
+            SIGNED_OUTPUT_PATH,
+        ],
+    )
+    assert not result.exception, result.output

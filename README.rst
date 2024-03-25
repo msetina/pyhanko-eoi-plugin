@@ -53,17 +53,18 @@ tell pyHanko where to look for the eOI PKCS#11 library.
 
 On Linux, it is named ``opensc-pkcs11.so`` and can usually be found under
 ``/usr/lib`` or ``/usr/local/lib``.
-On macOS, it is named ``opensc-pkcs11.dylib``, and can similarly be found under
-``/usr/local/lib``.
-The Windows version is typically installed to ``C:\Windows\System32`` and is
+On macOS, it is named ``opensc-pkcs11.so``, and can similarly be found under
+``/Library/OpenSC/lib``.
+The Windows version is typically installed to ``C:\Program Files\OpenSC Project\OpenSC\pkcs11`` and is
 called ``opensc-pkcs11.dll``.
+Official (IDProtect) typical install has its PKCS11 library in ``C:\Windows\System32`` with a name ``asepkcs.dll``
 
 
 On Linux, this boils down to the following:
 
 .. code-block:: bash
 
-    pyhanko sign addsig --field Sig1 eoi --user-pin 12345 \
+    pyhanko sign addsig --field Sig1 eoi \
         --lib /path/to/opensc-pkcs11.so input.pdf output.pdf
 
 
