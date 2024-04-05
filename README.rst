@@ -1,5 +1,5 @@
 pyhanko-eoi-plugin
-=================
+==================
 
 
 Introduction
