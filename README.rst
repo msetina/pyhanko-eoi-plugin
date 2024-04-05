@@ -1,4 +1,4 @@
-python-eoi-plugin
+pyhanko-eoi-plugin
 =================
 
 
