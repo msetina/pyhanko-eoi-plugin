@@ -53,7 +53,7 @@ eoi = "pyhanko_eoi.cli:EOIPlugin"
 testing = [
     "pyhanko-eoi-plugin",
     "pytest>=6.1.1",
-    "pytest-cov>=4.0,<6.1",
+    "pytest-cov>=4.0,<7.1",
 ]
 mypy = [
     "pyhanko-eoi-plugin",
