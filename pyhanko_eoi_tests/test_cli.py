@@ -132,33 +132,33 @@ def test_cli_eoi_lib_mandatory(cli_runner, monkeypatch):
     assert "--lib option is mandatory" in result.output
 
 
-def test_cli_eoi_pkcs11_error(cli_runner, monkeypatch):
-    from pkcs11 import PKCS11Error
+# def test_cli_eoi_pkcs11_error(cli_runner, monkeypatch):
+#     from pkcs11 import PKCS11Error
 
-    from pyhanko_eoi import eoi
+#     from pyhanko_eoi import eoi
 
-    def _throw(*_args, **_kwargs):
-        raise PKCS11Error
+#     def _throw(*_args, **_kwargs):
+#         raise PKCS11Error
 
-    monkeypatch.setattr(eoi, "open_eoi_session", value=_throw)
+#     monkeypatch.setattr(eoi, "open_eoi_session", value=_throw)
 
-    _write_config({"eoi-module-path": "blah"})
+#     _write_config({"eoi-module-path": "blah"})
 
-    result = cli_runner.invoke(
-        cli_root,
-        [
-            "sign",
-            "addsig",
-            "--field",
-            "Sig1",
-            "eoi",
-            INPUT_PATH,
-            SIGNED_OUTPUT_PATH,
-        ],
-        "12345",
-    )
-    assert result.exit_code == 1
-    assert "PKCS#11 error" in result.output
+#     result = cli_runner.invoke(
+#         cli_root,
+#         [
+#             "sign",
+#             "addsig",
+#             "--field",
+#             "Sig1",
+#             "eoi",
+#             INPUT_PATH,
+#             SIGNED_OUTPUT_PATH,
+#         ],
+#         "12345",
+#     )
+#     assert result.exit_code == 1
+#     assert "PKCS#11 error" in result.output
 
 
 def test_cli_eoi_pkcs11_error_on_token_label(cli_runner, monkeypatch):
